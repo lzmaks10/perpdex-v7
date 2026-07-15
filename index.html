@@ -4,45 +4,102 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PerpDEX V6</title>
 <script src="/ethers.min.js"></script>
-<script>window.updateChart=function(){var sym;if(CS.indexOf('NASDAQ:')===0){var t=CS.replace('NASDAQ:','');sym='BINANCE:'+t+'USDT.P';}else sym='BINANCE:'+CS.replace('BINANCE:','').replace('USDT','USDC');var old=document.getElementById('tvframe');if(old)old.remove();var _ifr=document.createElement('iframe');_ifr.id='tvframe';_ifr.style.cssText='width:100%;height:320px;border:none;border-radius:8px';var tc=document.getElementById('tc');tc.innerHTML='';tc.appendChild(_ifr);var c=JSON.stringify({symbol:sym,interval:'60',allow_symbol_change:'0',save_image:'1',studies:'[]',theme:'dark',style:'1',timezone:'Etc/UTC',studies_overrides:'{}'});_ifr.src='https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#'+encodeURIComponent(c);};</script>
+<script>window.updateChart=function(){
+if(CS.indexOf('NASDAQ:')===0){
+sym='BINANCE:'+t+'USDT.P';}else sym='BINANCE:'+CS.replace('BINANCE:','').replace('USDT','USDC');
+
+if(old)old.remove();
+
+_ifr.id='tvframe';_ifr.style.cssText='width:100%;height:320px;border:none;border-radius:8px';
+
+tc.innerHTML='';tc.appendChild(_ifr);
+
+_ifr.src='https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#'+encodeURIComponent(c);
+</script>
 <style>
 :root{--b:#0a0a0b;--s:#141416;--s2:#1c1c1f;--br:#2a2a2e;--t:#e8e8ea;--t2:#88888d;--g:#00e676;--r:#ff5252;--bl:#448aff}
-*{margin:0;padding:0;box-sizing:border-box}html{font-size:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:14px}
 body{font-family:system-ui,sans-serif;background:var(--b);color:var(--t);min-height:100vh}
 .app{max-width:1300px;margin:0 auto;padding:10px;display:grid;gap:10px}
 .hd{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--s);border-radius:8px;border:1px solid var(--br)}
-.hd h1{font-size:1.1rem;font-weight:700}.hd h1 span{color:var(--bl)}
+.hd h1{font-size:1.1rem;font-weight:700}
+.hd h1 span{color:var(--bl)}
 .hd .wr{display:flex;align-items:center;gap:8px;position:relative}
 .btn{padding:7px 16px;border:0;border-radius:20px;cursor:pointer;font-weight:600;font-size:12px}
-.btn-blue{background:var(--bl);color:#fff}.btn-green{background:var(--g);color:#000}.btn-red{background:var(--r);color:#fff}
+.btn-blue{background:var(--bl);color:#fff}
+.btn-green{background:var(--g);color:#000}
+.btn-red{background:var(--r);color:#fff}
 .pr{background:linear-gradient(135deg,#1a1a3e,#0a2a1e);border-radius:8px;border:1px solid var(--br);padding:8px 14px;display:flex;flex-wrap:nowrap;gap:14px;contain:layout style}
 .pr .it{flex:1 1 0;min-width:0;text-align:center}
-.pr .it span{font-size:10px;color:var(--t2)}.pr .it .v{font-size:15px;font-weight:700;font-family:monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff}.pr .it .s{font-size:13px;font-weight:600;white-space:nowrap}.pr .it .xs{font-size:12px;font-family:monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff}
+.pr .it span{font-size:10px;color:var(--t2)}
+.pr .it .v{font-size:15px;font-weight:700;font-family:monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff}
+.pr .it .s{font-size:13px;font-weight:600;white-space:nowrap}
+.pr .it .xs{font-size:12px;font-family:monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff}
 .ca{background:var(--s);border-radius:8px;border:1px solid var(--br);position:relative;height:320px}
 #tc{height:320px;border-radius:8px;overflow:hidden}
 .sp{position:absolute;top:8px;right:8px;z-index:100}
 #sb{background:rgba(20,20,22,.9);border:1px solid var(--br);border-radius:6px;padding:5px 22px 5px 8px;font-size:.75rem;font-weight:600;cursor:pointer;color:var(--t);backdrop-filter:blur(6px)}
 #sm{display:none;position:absolute;top:100%;right:0;z-index:101;background:var(--s);border:1px solid var(--br);border-radius:6px;box-shadow:0 6px 16px rgba(0,0,0,.5);margin-top:3px;max-height:none;overflow-y:auto}
-#sm.o{display:block}.so{padding:7px 12px;font-size:.75rem;cursor:pointer;color:var(--t2);white-space:nowrap}.so:hover{background:var(--s2);color:var(--t)}.so.on{color:var(--bl);font-weight:700}.sd{height:1px;background:var(--br);margin:3px 10px}
+#sm.o{display:block}
+.so{padding:7px 12px;font-size:.75rem;cursor:pointer;color:var(--t2);white-space:nowrap}
+.so:hover{background:var(--s2);color:var(--t)}
+.so.on{color:var(--bl);font-weight:700}
+.sd{height:1px;background:var(--br);margin:3px 10px}
 .mg{display:grid;grid-template-columns:300px 1fr;gap:10px}
 .pc,.tc{background:var(--s);border-radius:8px;border:1px solid var(--br);padding:12px}
 .pc h2,.tc h2{font-size:.85rem;color:var(--t2);margin-bottom:8px;text-transform:uppercase}
 .os h2{font-size:.85rem;color:#1e3a8a;margin-bottom:8px;text-transform:uppercase}
-.ps{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--br)}.ps:last-child{border-bottom:0}.ps .l{color:var(--t2);font-size:.78rem}.ps .v{font-weight:600;font-size:.8rem}
-.pg{display:flex;gap:4px;margin-top:8px}.pg input{flex:1;background:var(--s2);border:1px solid var(--br);border-radius:5px;padding:7px 6px;color:var(--t);font-size:.73rem;outline:0}.pg input:focus{border-color:var(--bl)}.pg button{flex:1;min-width:0;padding:7px 4px;border:0;border-radius:5px;cursor:pointer;font-weight:600;font-size:.68rem;white-space:nowrap}
-.th{display:flex;gap:6px;margin-bottom:8px}.tb{flex:1;padding:8px;border:1px solid var(--br);border-radius:6px;background:var(--s2);color:var(--t2);cursor:pointer;font-weight:600;font-size:.82rem}.tb.al{background:rgba(0,230,118,.12);border-color:var(--g);color:var(--g)}.tb.as{background:rgba(255,82,82,.12);border-color:var(--r);color:var(--r)}
-.ir{margin-bottom:8px}.ir label{display:block;font-size:.73rem;color:var(--t2);margin-bottom:3px}.ir input{width:100%;padding:8px 10px;background:var(--s2);border:1px solid var(--br);border-radius:6px;color:var(--t);font-size:.85rem;outline:0}.ir input:focus{border-color:var(--bl)}
-.lr{display:flex;align-items:center;gap:8px;margin-bottom:8px}.lr input[type=range]{flex:1;height:4px;-webkit-appearance:none;background:var(--br);border-radius:2px}.lr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--bl);cursor:pointer}.lr .lv{min-width:40px;text-align:center;font-weight:700;color:var(--bl);font-size:.88rem}
-.cp{background:var(--s2);border-radius:6px;padding:8px;margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:.76rem}.ci{display:flex;justify-content:space-between}.ci .l{color:var(--t2)}.ci .v{font-weight:600}.ci .v.r{color:var(--r)}
-.ob{width:100%;padding:10px;border:0;border-radius:6px;font-weight:700;font-size:.88rem;cursor:pointer}.ob:hover{filter:brightness(1.12)}.ob:disabled{opacity:.5}
-.os{margin-top:8px}.os h2{font-size:.82rem;color:var(--t2);margin-bottom:6px}
-.ol{display:flex;flex-direction:column;gap:3px;max-height:320px;overflow-y:auto}.ol::-webkit-scrollbar{width:4px}.ol::-webkit-scrollbar-thumb{background:var(--br);border-radius:2px}
-.oc{background:var(--s2);border-radius:4px;padding:4px 5px;font-size:.64rem;border-left:3px solid transparent}.oc.l{background:rgba(0,230,118,.06)}.oc.s{background:rgba(255,82,82,.06)}
-.oc .gr{display:grid;grid-template-columns:70px 60px 55px 55px 55px 40px 60px 55px 60px;gap:2px;align-items:center}.oc .c{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.oc .c.n{text-align:center}
+.ps{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--br)}
+.ps:last-child{border-bottom:0}
+.ps .l{color:var(--t2);font-size:.78rem}
+.ps .v{font-weight:600;font-size:.8rem}
+.pg{display:flex;gap:4px;margin-top:8px}
+.pg input{flex:1;background:var(--s2);border:1px solid var(--br);border-radius:5px;padding:7px 6px;color:var(--t);font-size:.73rem;outline:0}
+.pg input:focus{border-color:var(--bl)}
+.pg button{flex:1;min-width:0;padding:7px 4px;border:0;border-radius:5px;cursor:pointer;font-weight:600;font-size:.68rem;white-space:nowrap}
+.th{display:flex;gap:6px;margin-bottom:8px}
+.tb{flex:1;padding:8px;border:1px solid var(--br);border-radius:6px;background:var(--s2);color:var(--t2);cursor:pointer;font-weight:600;font-size:.82rem}
+.tb.al{background:rgba(0,230,118,.12);border-color:var(--g);color:var(--g)}
+.tb.as{background:rgba(255,82,82,.12);border-color:var(--r);color:var(--r)}
+.ir{margin-bottom:8px}
+.ir label{display:block;font-size:.73rem;color:var(--t2);margin-bottom:3px}
+.ir input{width:100%;padding:8px 10px;background:var(--s2);border:1px solid var(--br);border-radius:6px;color:var(--t);font-size:.85rem;outline:0}
+.ir input:focus{border-color:var(--bl)}
+.lr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lr input[type=range]{flex:1;height:4px;-webkit-appearance:none;background:var(--br);border-radius:2px}
+.lr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--bl);cursor:pointer}
+.lr .lv{min-width:40px;text-align:center;font-weight:700;color:var(--bl);font-size:.88rem}
+.cp{background:var(--s2);border-radius:6px;padding:8px;margin-bottom:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:.76rem}
+.ci{display:flex;justify-content:space-between}
+.ci .l{color:var(--t2)}
+.ci .v{font-weight:600}
+.ci .v.r{color:var(--r)}
+.ob{width:100%;padding:10px;border:0;border-radius:6px;font-weight:700;font-size:.88rem;cursor:pointer}
+.ob:hover{filter:brightness(1.12)}
+.ob:disabled{opacity:.5}
+.os{margin-top:8px}
+.os h2{font-size:.82rem;color:var(--t2);margin-bottom:6px}
+.ol{display:flex;flex-direction:column;gap:3px;max-height:320px;overflow-y:auto}
+.ol::-webkit-scrollbar{width:4px}
+.ol::-webkit-scrollbar-thumb{background:var(--br);border-radius:2px}
+.oc{background:var(--s2);border-radius:4px;padding:4px 5px;font-size:.64rem;border-left:3px solid transparent}
+.oc.l{background:rgba(0,230,118,.06)}
+.oc.s{background:rgba(255,82,82,.06)}
+.oc .gr{display:grid;grid-template-columns:70px 60px 55px 55px 55px 40px 60px 55px 60px;gap:2px;align-items:center}
+.oc .c{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oc .c.n{text-align:center}
 .ch{display:grid;grid-template-columns:70px 60px 55px 55px 55px 40px 60px 55px 60px;gap:2px;padding:0 5px 3px;font-size:.56rem;color:var(--t2);text-align:center}
-.nbmc{background:var(--bl);color:#fff;border:0;border-radius:3px;cursor:pointer;font-size:.56rem;font-weight:600;padding:2px 4px;width:100%}.nbmc:hover{filter:brightness(1.15)}
-.nc{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;color:var(--t2);gap:8px}.nc small{font-size:.72rem}
-#log{display:none;position:fixed;bottom:6px;left:6px;right:6px;z-index:9999;background:rgba(5,5,7,.97);border:1px solid var(--br);border-radius:6px;padding:5px 8px;font-family:monospace;font-size:10px;max-height:120px;overflow-y:auto}#log div{padding:0}.ok{color:var(--g)}.err{color:var(--r)}.info{color:var(--t2)}.warn{color:#ffab40}
+.nbmc{background:var(--bl);color:#fff;border:0;border-radius:3px;cursor:pointer;font-size:.56rem;font-weight:600;padding:2px 4px;width:100%}
+.nbmc:hover{filter:brightness(1.15)}
+.nc{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;color:var(--t2);gap:8px}
+.nc small{font-size:.72rem}
+#log{display:none;position:fixed;bottom:6px;left:6px;right:6px;z-index:9999;background:rgba(5,5,7,.97);border:1px solid var(--br);border-radius:6px;padding:5px 8px;font-family:monospace;font-size:10px;max-height:120px;overflow-y:auto}
+#log div{padding:0}
+.ok{color:var(--g)}
+.err{color:var(--r)}
+.info{color:var(--t2)}
+.warn{color:#ffab40}
 </style>
 <link rel="icon" href="/favicon.png" type="image/png">
 </head>
@@ -121,203 +178,433 @@ body{font-family:system-ui,sans-serif;background:var(--b);color:var(--t);min-hei
 </div>
 
 <script>
-var C={rpc:'https://rpc.testnet.arc.network',cid:5042002,hex:'0x4CEF52',val:'0xE593262736B8D25455A04aE46C37b2ABA4Af2A77',per:'0xE593262736B8D25455A04aE46C37b2ABA4Af2A77',usdc:'0x3600000000000000000000000000000000000000'};
-var E20=['function balanceOf(address) view returns (uint256)','function approve(address,uint256) returns (bool)','function allowance(address,address) view returns (uint256)'];
-var VA=['function deposit(uint256)','function withdraw(uint256)','function totalLiquidity() view returns (uint256)','function getUserLP(address) view returns (uint256)','function getUserShare(address) view returns (uint256,uint256)'];
-var PE=['function openPosition(uint8,uint8,uint256,uint256,uint256)','function closePosition(uint256,uint256)','function liquidate(uint256,uint256)','function getPosition(uint256) view returns (tuple(address,uint8,uint8,uint256,uint256,uint256,uint256,uint256,bool))','function getUserPositions(address) view returns (uint256[])','function getAllOpenPositions() view returns (uint256[])','function deposit(uint256)','function withdraw(uint256)','function getUserShare(address) view returns (uint256,uint256)'];
-var _eif=new ethers.Interface(E20),_vif=new ethers.Interface(VA),_pif=new ethers.Interface(PE);
 
-var SYMS=[{k:'BINANCE:BTCUSDT',l:'BTC/USDC',s:'BTCUSDT'},{k:'BINANCE:ETHUSDT',l:'ETH/USDC',s:'ETHUSDT'},{k:'BINANCE:BNBUSDT',l:'BNB/USDC',s:'BNBUSDT'},{k:'BINANCE:SOLUSDT',l:'SOL/USDC',s:'SOLUSDT'},{k:'BINANCE:XRPUSDT',l:'XRP/USDC',s:'XRPUSDT'},{k:'BINANCE:SUIUSDT',l:'SUI/USDC',s:'SUIUSDT'},{k:'BINANCE:ZECUSDT',l:'ZEC/USDC',s:'ZECUSDT'},{k:'BINANCE:AAVEUSDT',l:'AAVE/USDC',s:'AAVEUSDT'},{k:'BINANCE:UNIUSDT',l:'UNI/USDC',s:'UNIUSDT'},{k:'BINANCE:LINKUSDT',l:'LINK/USDC',s:'LINKUSDT'},{k:'BINANCE:ONDOUSDT',l:'ONDO/USDC',s:'ONDOUSDT'},{k:'NASDAQ:CRCL',l:'CRCL/USDC',s:'CRCL'},{k:'NASDAQ:TSLA',l:'TSLA/USDC',s:'TSLA'},{k:'NASDAQ:NVDA',l:'NVDA/USDC',s:'NVDA'},{k:'NASDAQ:MSFT',l:'MSFT/USDC',s:'MSFT'},{k:'NASDAQ:GOOGL',l:'GOOGL/USDC',s:'GOOGL'},{k:'NASDAQ:AAPL',l:'AAPL/USDC',s:'AAPL'},{k:'NASDAQ:MU',l:'MU/USDC',s:'MU'},{k:'NASDAQ:AMZN',l:'AMZN/USDC',s:'AMZN'},{k:'NASDAQ:INTC',l:'INTC/USDC',s:'INTC'},{k:'NASDAQ:AMD',l:'AMD/USDC',s:'AMD'},{k:'NASDAQ:WDC',l:'WDC/USDC',s:'WDC'},{k:'NASDAQ:SNDK',l:'SNDK/USDC',s:'SNDK'},{k:'NASDAQ:BABA',l:'BABA/USDC',s:'BABA'},{k:'NASDAQ:MRVL',l:'MRVL/USDC',s:'MRVL'},{k:'NASDAQ:AMAT',l:'AMAT/USDC',s:'AMAT'},{k:'NASDAQ:SKHYNIX',l:'SKHYNIX/USDC',s:'SKHYNIX'},{k:'NASDAQ:SPCX',l:'SPCX/USDC',s:'SPCX'},{k:'NASDAQ:HOOD',l:'HOOD/USDC',s:'HOOD'},{k:'NASDAQ:XAG',l:'XAG/USDC',s:'XAG'},{k:'NASDAQ:XAU',l:'XAU/USDC',s:'XAU'}];
 
-var R,S,UA,TV=null,CS='BINANCE:BTCUSDT',side=0,BP={},_ki=null;
-var $=function(id){return document.getElementById(id)};
-function log(m,c){var l=$('log');l.innerHTML+='<div class="'+(c||'info')+'">'+new Date().toLocaleTimeString()+' '+m+'</div>';l.scrollTop=l.scrollHeight}
-function em(e){return e.reason||e.shortMessage||(e.info&&e.info.error&&e.info.error.message)||e.message||String(e)}
-function fm(v){return(Number(v)/1e6).toLocaleString('en-US',{maximumFractionDigits:2})}
-function fn(v,d){d=d||2;return Number(v).toLocaleString('en-US',{maximumFractionDigits:d})}
-function fv(v){return v>=1e9?'$'+(v/1e9).toFixed(2)+'B':v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+(v/1e3).toFixed(2)+'K':'$'+v.toFixed(2)}
-async function _send(to,data,gas){var tx=await S.sendTransaction({to:to,data:data,gasLimit:gas});log('Tx: '+tx.hash.slice(0,14)+'...');var rc=await tx.wait();log('Confirmed block '+rc.blockNumber,'ok');return rc}
 
-function buildPairs(){var h='';SYMS.forEach(function(p,i){if(i===11)h+='<div class=sd></div>';var clr=i<11?'#00e676':'#ff5252';h+='<div class="so'+(p.k===CS?' on':'')+'" data-sym="'+p.k+'" style="color:'+clr+'">'+p.l+'</div>'});$('sm').innerHTML=h}
+
+
+
+
+
+
+
+
+
+
+
+
+l.innerHTML+='<div class="'+(c||'info')+'">'+new Date().toLocaleTimeString()+' '+m+'</div>';l.scrollTop=l.scrollHeight}
+
+return e.reason||e.shortMessage||(e.info&&e.info.error&&e.info.error.message)||e.message||String(e)}
+
+return(Number(v)/1e6).toLocaleString('en-US',{maximumFractionDigits:2})}
+
+d=d||2
+ Number(v).toLocaleString('en-US',{maximumFractionDigits:d})}
+
+return v>=1e9?'$'+(v/1e9).toFixed(2)+'B':v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+(v/1e3).toFixed(2)+'K':'$'+v.toFixed(2)}
+async 
+
+log('Tx: '+tx.hash.slice(0,14)+'...');
+
+log('Confirmed block '+rc.blockNumber,'ok')
+ rc}
+
+
+
+SYMS.forEach(function(p,i){if(i===11)h+='<div class=sd></div>';
+
+h+='<div class="so'+(p.k===CS?' on':'')+'" data-sym="'+p.k+'" style="color:'+clr+'">'+p.l+'</div>'})
+('sm').innerHTML=h}
 buildPairs();
-$('sb').onclick=function(e){e.stopPropagation();$('sm').classList.toggle('o')};
+$('sb').onclick=function(e){e.stopPropagation()
+('sm').classList.toggle('o')
+
 document.addEventListener('click',function(e){if(!e.target.closest('.sp'))$('sm').classList.remove('o')});
-$('sm').addEventListener('click',async function(e){var el=e.target.closest('.so');if(!el)return;CS=el.dataset.sym;buildPairs();$('sb').textContent=el.textContent+' ▾';$('sm').classList.remove('o');await _fetchBinance();updatePBar();updateCalc();updateChart()});
+$('sm').addEventListener('click',async function(e){
+if(!el)return;CS=el.dataset.sym;buildPairs()
+('sb').textContent=el.textContent+' ▾'
+('sm').classList.remove('o');await _fetchBinance();updatePBar();updateCalc();updateChart()});
 
-async function fetchPrices(){
-  try{var r=await fetch('/api/prices');var d=await r.json();for(var s in d)BP[s]=d[s];updatePBar();updateCalc()}catch(e){}
-}
-function getPrice(){var si=SYMS.find(function(x){return x.k===CS});var d=si?BP[si.s]:null;return d?d.p:0}
-function updatePBar(){
-  var si=SYMS.find(function(x){return x.k===CS});if(!si)return;var d=BP[si.s];if(!d||!d.p)return;
-  $('p0').textContent='$'+fn(d.p);$('p1').textContent=(d.c>=0?'+':'')+(d.c||0).toFixed(2)+'%';$('p1').style.color=(d.c||0)>=0?'var(--g)':'var(--r)';
-  $('p2').textContent='$'+fn(d.h);$('p3').textContent='$'+fn(d.l);
-  $('volLabel').textContent='24h Vol ('+si.s.replace('USDT','')+')'; var coins=d.t>0&&d.p>0?d.t/d.p:d.v; $('p5').textContent=coins>=1e9?(coins/1e9).toFixed(2)+'B':coins>=1e6?(coins/1e6).toFixed(2)+'M':coins>=1e3?(coins/1e3).toFixed(2)+'K':fn(coins,0); $('p6').textContent=fv(d.t||0);
-}
-function updateCalc(){var pv=parseFloat($('pi').value)||0,l=parseInt($('ls').value)||1;$('ld').textContent=l+'x';if(!pv){['cop','cpv','clp'].forEach(function(i){$(i).textContent='--'});return}var cp=getPrice()||1,sz=pv*l/cp,lq=side?cp*(l+1)/l:cp*(l-1)/l;$('cop').textContent='$'+fn(cp);$('cpv').textContent='$'+fn(pv*l);$('clp').textContent='$'+fn(lq)}
-$('pi').oninput=updateCalc;$('ls').oninput=updateCalc;
+async 
 
-
-
-$('btnConnect').onclick=function(e){e.stopPropagation();if(!UA){$('walletModal').style.display='flex'}else $('walletDrop').style.display=$('walletDrop').style.display==='block'?'none':'block'};
-$('btnDrop').onclick=function(e){e.stopPropagation();$('walletDrop').style.display=$('walletDrop').style.display==='block'?'none':'block'};
-document.addEventListener('click',function(){try{$('walletDrop').style.display='none'}catch(e){}});
-$('btnDisconnect').onclick=function(e){e.stopPropagation();disconnect();$('walletDrop').style.display='none'};
-function disconnect(){if(_ki)clearInterval(_ki);UA=null;S=null;R=null;$('btnConnect').textContent='Connect Wallet';$('btnConnect').style='';$('btnDrop').style.display='none';$('walletAddr').textContent='—';$('walletBal').textContent='—';$('pt').textContent='—';log('Wallet disconnected','ok')}
-$('btnOKX').onclick=function(e){e.stopPropagation();$('walletModal').style.display='none';var w=window.okxwallet||window.ethereum;if(!w){log('OKX Wallet not detected','err');return}connect(w)};
-$('btnWC').onclick=function(e){e.stopPropagation();$('walletModal').style.display='none';connectWC()};
-$('btnWCCancel').onclick=function(e){e.stopPropagation();$('walletModal').style.display='none'};
-$('walletModal').onclick=function(e){if(e.target===this)$('walletModal').style.display='none'};
-
-
-
-async function connect(w){if(!w)w=window.ethereum||window.okxwallet;if(!w)return log('Please install a wallet','err');
   try{
-    try{await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]})}catch(e){if(e.code===4902){await w.request({method:'wallet_addEthereumChain',params:[{chainId:C.hex,chainName:'Arc Testnet',rpcUrls:[C.rpc],nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18}}]});await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]})}else{log('Switch to Arc Testnet first','err');return}}
-    var a=await w.request({method:'eth_requestAccounts'});UA=a[0];log('Connected: '+UA.slice(0,8)+'...','ok');
-    S=await(new ethers.BrowserProvider(w)).getSigner();R=new ethers.JsonRpcProvider(C.rpc);
-    try{var bn=await R.getBlockNumber();log('RPC: block '+bn,'ok')}catch(e){log('RPC failed: '+e.message,'err')}
-    try{var vc=await R.getCode(C.per);log('Vault: '+(vc.length>4?'OK':'EMPTY'),vc.length>4?'ok':'err')}catch(e){}
-    try{var pc=await R.getCode(C.per);log('PerpDEX: '+(pc.length>4?'OK':'EMPTY'),pc.length>4?'ok':'err')}catch(e){}
-    try{var u=new ethers.Contract(C.usdc,E20,R);var b=await u.balanceOf(UA);log('USDC: '+fm(b),'ok');$('walletBal').textContent='$'+fm(b)}catch(e){$('walletBal').textContent='???'}
-    $('btnConnect').textContent=UA.slice(0,6)+'..'+UA.slice(-4);$('btnConnect').style.borderRadius='20px 0 0 20px';$('btnConnect').style.background='var(--s2)';$('btnConnect').style.border='1px solid var(--br)';
-    $('btnDrop').style.display='inline-block';$('walletAddr').textContent=UA;
-    refreshAll();startKeeper();setTimeout(function(){refreshAll()},2000);
-  }catch(e){log('Connect failed: '+em(e),'err')}
+
+
+for(
+updatePBar();updateCalc()
+(e){}
 }
 
-document.querySelector('.th').addEventListener('click',function(e){var t=e.target.closest('.tb');if(!t)return;document.querySelectorAll('.tb').forEach(function(x){x.className='tb'});side=t.dataset.s==='SHORT'?1:0;t.classList.add(side?'as':'al');$('oob').textContent='Open '+(side?'Short':'Long');$('oob').style.background=side?'var(--r)':'var(--g)';$('oob').style.color=side?'#fff':'#000';updateCalc()});
 
-async function refreshPool(){
+
+
+return d?d.p:0}
+
+
+  
+if(!si)return;
+
+if(!d||!d.p)return;
+  $('p0').textContent='$'+fn(d.p)
+('p1').textContent=(d.c>=0?'+':'')+(d.c||0).toFixed(2)+'%'
+('p1').style.color=(d.c||0)>=0?'var(--g)':'var(--r)';
+  $('p2').textContent='$'+fn(d.h)
+('p3').textContent='$'+fn(d.l);
+  $('volLabel').textContent='24h Vol ('+si.s.replace('USDT','')+')'; 
+ $('p5').textContent=coins>=1e9?(coins/1e9).toFixed(2)+'B':coins>=1e6?(coins/1e6).toFixed(2)+'M':coins>=1e3?(coins/1e3).toFixed(2)+'K':fn(coins,0); $('p6').textContent=fv(d.t||0);
+}
+
+
+$('ld').textContent=l+'x'
+(!pv){['cop','cpv','clp'].forEach(function(i){$(i).textContent='--'})
+}
+$('cop').textContent='$'+fn(cp)
+('cpv').textContent='$'+fn(pv*l)
+('clp').textContent='$'+fn(lq)}
+$('pi').oninput=updateCalc
+('ls').oninput=updateCalc;
+
+
+
+$('btnConnect').onclick=function(e){e.stopPropagation()
+(!UA){$('walletModal').style.display='flex'}else $('walletDrop').style.display=$('walletDrop').style.display==='block'?'none':'block'
+
+$('btnDrop').onclick=function(e){e.stopPropagation()
+('walletDrop').style.display=$('walletDrop').style.display==='block'?'none':'block'
+
+document.addEventListener('click',function(){try{$('walletDrop').style.display='none'
+(e){}});
+$('btnDisconnect').onclick=function(e){e.stopPropagation();disconnect()
+('walletDrop').style.display='none'
+
+
+if(_ki)clearInterval(_ki);UA=null;S=null;R=null
+('btnConnect').textContent='Connect Wallet'
+('btnConnect').style=''
+('btnDrop').style.display='none'
+('walletAddr').textContent='—'
+('walletBal').textContent='—'
+('pt').textContent='—'
+('Wallet disconnected','ok')}
+$('btnOKX').onclick=function(e){e.stopPropagation()
+('walletModal').style.display='none';
+
+if(!w){log('OKX Wallet not detected','err')
+}connect(w)
+
+$('btnWC').onclick=function(e){e.stopPropagation()
+('walletModal').style.display='none';connectWC()
+
+$('btnWCCancel').onclick=function(e){e.stopPropagation()
+('walletModal').style.display='none'
+
+$('walletModal').onclick=function(e){if(e.target===this)$('walletModal').style.display='none'
+
+
+
+
+async 
+if(!w)w=window.ethereum||window.okxwallet
+(!w)return log('Please install a wallet','err');
+  try{
+    try{await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]})
+(e){if(e.code===4902){await w.request({method:'wallet_addEthereumChain',params:[{chainId:C.hex,chainName:'Arc Testnet',rpcUrls:[C.rpc],nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18}}]});await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]})}else{log('Switch to Arc Testnet first','err')
+}}
+    
+UA=a[0]
+('Connected: '+UA.slice(0,8)+'...','ok');
+    S=await(new ethers.BrowserProvider(w)).getSigner();R=new ethers.JsonRpcProvider(C.rpc);
+    try{
+log('RPC: block '+bn,'ok')
+(e){log('RPC failed: '+e.message,'err')}
+    try{
+log('Vault: '+(vc.length>4?'OK':'EMPTY'),vc.length>4?'ok':'err')
+(e){}
+    try{
+log('PerpDEX: '+(pc.length>4?'OK':'EMPTY'),pc.length>4?'ok':'err')
+(e){}
+    try{
+
+
+log('USDC: '+fm(b),'ok')
+('walletBal').textContent='$'+fm(b)
+(e){$('walletBal').textContent='???'}
+    $('btnConnect').textContent=UA.slice(0,6)+'..'+UA.slice(-4)
+('btnConnect').style.borderRadius='20px 0 0 20px'
+('btnConnect').style.background='var(--s2)'
+('btnConnect').style.border='1px solid var(--br)';
+    $('btnDrop').style.display='inline-block'
+('walletAddr').textContent=UA;
+    refreshAll();startKeeper();setTimeout(function(){refreshAll()},2000);
+  
+(e){log('Connect failed: '+em(e),'err')}
+}
+
+document.querySelector('.th').addEventListener('click',function(e){
+if(!t)return
+.querySelectorAll('.tb').forEach(function(x){x.className='tb'});side=t.dataset.s==='SHORT'?1:0;t.classList.add(side?'as':'al')
+('oob').textContent='Open '+(side?'Short':'Long')
+('oob').style.background=side?'var(--r)':'var(--g)'
+('oob').style.color=side?'#fff':'#000';updateCalc()});
+
+async 
+
   if(!UA||!R)return;
   try{
-    var v=new ethers.Contract(C.per,['function totalLiquidity() view returns (uint256)','function getUserShare(address) view returns (uint256,uint256)','function getUserLP(address) view returns (uint256)'],R);
-    var tl=await v.totalLiquidity();$('pt').textContent='$'+fm(tl);
-    try{var sr=await v.getUserShare(UA);var dep=fm(sr[0]);$('md').textContent='$'+dep;var p=Number(sr[1])/100;$('ms').textContent=(p===Math.round(p)?String(p):p.toFixed(1))+'%';$('mlp').textContent='$'+dep}catch(e){}
+    
+
+    
+$('pt').textContent='$'+fm(tl);
     try{
-      var rp=new ethers.Contract(C.per,['function getAllOpenPositions() view returns (uint256[])','function getPosition(uint256) view returns (tuple(address,uint8,uint8,uint256,uint256,uint256,uint256,uint256,bool))'],R);
-      var ids=await rp.getAllOpenPositions(),oi=0,tp=0;
-      for(var i=0;i<ids.length;i++){try{var po=await rp.getPosition(ids[i]);if(!po[8]){var sz=Number(po[3])*Number(po[4])/100;oi+=sz;var pi=Number(po[2]),si=SYMS[pi],ppk=si?si.s:null;var cp=ppk&&BP[ppk]?BP[ppk].p:(Number(po[5])/1e8),ep=Number(po[5])/1e8,tq=Number(po[6])/1e6;tp+=(Number(po[1])===0?(cp-ep):(ep-cp))*tq}}catch(e){}};
+
+
+$('md').textContent='$'+dep;
+
+$('ms').textContent=(p===Math.round(p)?String(p):p.toFixed(1))+'%'
+('mlp').textContent='$'+dep
+(e){}
+    try{
+      
+
+      
+
+      for(
+i<ids.length;i++){try{
+if(!po[8]){
+oi+=sz;
+
+
+
+tp+=(Number(po[1])===0?(cp-ep):(ep-cp))*tq}
+(e){}
+
       $('toi').textContent='$'+(oi/1e6).toLocaleString('en-US',{maximumFractionDigits:2});
-      var pp=-tp;$('tpPnl').textContent=(pp>=0?'+':'')+pp.toFixed(2)+' USDC';$('tpPnl').style.color=pp>=0?'var(--g)':'var(--r)';
-      try{var adj=Number(tl)+pp*1e6;if(adj>0)$('adjLiq').textContent='$'+fm(BigInt(Math.floor(adj)))}catch(e){}
-    }catch(e){}
-  }catch(e){}
+      
+$('tpPnl').textContent=(pp>=0?'+':'')+pp.toFixed(2)+' USDC'
+('tpPnl').style.color=pp>=0?'var(--g)':'var(--r)';
+      try{
+if(adj>0)$('adjLiq').textContent='$'+fm(BigInt(Math.floor(adj)))
+(e){}
+    
+(e){}
+  
+(e){}
 }
 
-async function doDeposit(isDep){
-  if(!UA)return log('Not connected','err');var am=$('pa').value.trim();if(!am||Number(am)<=0)return log('Enter amount','err');
-  try{var w=ethers.parseUnits(am,6)}catch(e){return log('Invalid amount','err')}
-  log((isDep?'Deposit':'Withdraw')+' '+am+' USDC...');
+async 
+
+  if(!UA)return log('Not connected','err');
+
+if(!am||Number(am)<=0)return log('Enter amount','err');
   try{
-    var u=new ethers.Contract(C.usdc,E20,R);var bal=await u.balanceOf(UA);if(bal<w)return log('Insufficient USDC','err');
-    var alw=await u.allowance(UA,C.per);if(alw<w){log('Approving USDC...');await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000);log('Approved','ok')}
+
+  try{
+    
+
+
+if(bal<w)return log('Insufficient USDC','err');
+    
+if(alw<w){log('Approving USDC...');await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000)
+('Approved','ok')}
     await _send(C.per,isDep?_pif.encodeFunctionData('deposit',[w]):_pif.encodeFunctionData('withdraw',[w]),500000);
     log((isDep?'Deposited!':'Withdrawn!'),'ok');refreshBalance();refreshAll();
-  }catch(e){log((isDep?'Deposit':'Withdraw')+' FAILED: '+em(e),'err')}
+  
+(e){log((isDep?'Deposit':'Withdraw')+' FAILED: '+em(e),'err')}
 }
-$('btnDeposit').onclick=function(){doDeposit(true)};$('btnWithdraw').onclick=function(){doDeposit(false)};
+$('btnDeposit').onclick=function(){doDeposit(true)
+$('btnWithdraw').onclick=function(){doDeposit(false)
+
 
 $('oob').onclick=async function(){
-  if(!UA)return log('Not connected','err');var pr=$('pi').value.trim();if(!pr||Number(pr)<=0)return log('Enter margin','err');
-  var l=parseInt($('ls').value)||1;
-  try{var w=ethers.parseUnits(pr,6),ls=BigInt(l*100)}catch(e){return log('Invalid input','err')}
-  log('Open '+(side?'Short':'Long')+' '+pr+' USDC '+l+'x...');
-  try{
-    var u=new ethers.Contract(C.usdc,E20,R);var bal=await u.balanceOf(UA);if(bal<w)return log('Insufficient USDC','err');
-    var alw=await u.allowance(UA,C.per);if(alw<w){log('Approving PerpDEX...');await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000);log('Approved','ok')}
-    var pairIdx=SYMS.findIndex(function(x){return x.k===CS});if(pairIdx<0)pairIdx=0;var p=getPrice();if(!p||p<=0)return log('No price','err');var op=ethers.parseUnits(p.toFixed(8),8);await _send(C.per,_pif.encodeFunctionData('openPosition',[side,pairIdx,w,ls,op]),3000000);
-    log('Position opened!','ok');
-    try{var rp=new ethers.Contract(C.per,['function getUserPositions(address) view returns (uint256[])'],R);var ids=await rp.getUserPositions(UA);if(ids.length>0){var sp=JSON.parse(localStorage.getItem('pp')||'{}');sp[Number(ids[ids.length-1])]=CS;localStorage.setItem('pp',JSON.stringify(sp))}}catch(e){}
-    refreshAll();
-  }catch(e){log('Open FAILED: '+em(e),'err')}
-};
+  if(!UA)return log('Not connected','err');
 
-async function closePos(pid){
+if(!pr||Number(pr)<=0)return log('Enter margin','err');
+  
+
+  try{
+
+  try{
+    
+
+
+if(bal<w)return log('Insufficient USDC','err');
+    
+if(alw<w){log('Approving PerpDEX...');await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000)
+('Approved','ok')}
+    
+if(pairIdx<0)pairIdx=0;
+
+if(!p||p<=0)return log('No price','err');
+
+await _send(C.per,_pif.encodeFunctionData('openPosition',[side,pairIdx,w,ls,op]),3000000);
+    log('Position opened!','ok');
+    try{
+
+
+if(ids.length>0){
+sp[Number(ids[ids.length-1])]=CS;localStorage.setItem('pp',JSON.stringify(sp))}
+(e){}
+    refreshAll();
+  
+(e){log('Open FAILED: '+em(e),'err')}
+
+
+
+async 
+
   log('Close #'+pid+'...');
   try{
-    var sp;try{var rp=new ethers.Contract(C.per,PE,R);var po=await rp.getPosition(pid);var pi=Number(po[2]),si=SYMS[pi],ppk=si?si.s:null;var cp=ppk&&BP[ppk]&&BP[ppk].p?BP[ppk].p:0;if(!cp||cp<=0)cp=Number(po[5])/1e8;sp=ethers.parseUnits(cp.toFixed(8),8)}catch(e){}
+    
+try{
+
+
+
+
+
+
+if(!cp||cp<=0)cp=Number(po[5])/1e8;sp=ethers.parseUnits(cp.toFixed(8),8)
+(e){}
     if(!sp)throw new Error('No price');
     await _send(C.per,_pif.encodeFunctionData('closePosition',[pid,sp]),2000000);
     log('Closed #'+pid+'!','ok');refreshAll();
-  }catch(e){log('Close FAILED: '+em(e),'err');if(e.data)log('Revert data: '+e.data,'err')}
+  
+(e){log('Close FAILED: '+em(e),'err')
+(e.data)log('Revert data: '+e.data,'err')}
 }
-$('ol').addEventListener('click',function(e){var b=e.target.closest('.nbmc');if(b)closePos(parseInt(b.dataset.oid))});
+$('ol').addEventListener('click',function(e){
+if(b)closePos(parseInt(b.dataset.oid))});
 
-async function loadPos(){
+async 
+
   if(!UA||!R)return;
   try{
-    var rp=new ethers.Contract(C.per,['function getAllOpenPositions() view returns (uint256[])','function getPosition(uint256) view returns (tuple(address,uint8,uint8,uint256,uint256,uint256,uint256,uint256,bool))'],R);
-    var ids=await rp.getAllOpenPositions();if(!ids.length){$('ol').innerHTML='<div class=nc><small>No positions</small></div>';return}
-    var h='';
-    for(var i=ids.length-1;i>=0;i--){try{
-      var oid=Number(ids[i]),po=await rp.getPosition(oid);if(po[8]||po[0].toLowerCase()!==UA.toLowerCase())continue;
-      var pi=Number(po[2]),si=SYMS[pi],ppk=si?si.s:null,lbl=si?si.l:'?';
-      var entry=Number(po[5])/1e8,mp=ppk&&BP[ppk]?BP[ppk].p:entry,isL=Number(po[1])===0;
-      var pnl=(isL?(mp-entry):(entry-mp))*Number(po[6])/1e6,rc=isL?'#00e676':'#ff5252';
+    
+
+    
+if(!ids.length){$('ol').innerHTML='<div class=nc><small>No positions</small></div>'
+}
+    
+
+    for(
+i>=0;i--){try{
+      
+if(po[8]||po[0].toLowerCase()!==UA.toLowerCase())continue;
+      
+
+      
+
+      
+
       h+='<div class="oc '+(isL?'l':'s')+'\"><div class=gr><div class=c>'+lbl+'</div><div class="c n" style=color:'+rc+'>$'+fn(mp,2)+'</div><div class="c n" style=color:'+rc+'>$'+fn(entry,2)+'</div><div class="c n" style=color:'+rc+'>$'+fn(Number(po[7])/1e8,2)+'</div><div class="c n" style=color:'+rc+'>'+fn(Number(po[3])*Number(po[4])/100/1e6)+'</div><div class="c n" style=color:'+rc+'>'+(Number(po[4])/100)+'x</div><div class="c n" style="font-weight:700;color:'+rc+'\">'+(pnl>=0?'+':'')+pnl.toFixed(2)+'</div><div class="c n">'+fn(Number(po[6])/1e6,4)+'</div><button class="nbmc" data-oid="'+oid+'">Close</button></div></div>'
-    }catch(e){}}
+    
+(e){}}
     $('ol').innerHTML=h||'<div class=nc><small>No active positions</small></div>'
-  }catch(e){}
+  
+(e){}
 }
 
-function startKeeper(){if(!UA)return;if(_ki)clearInterval(_ki);
+
+if(!UA)return
+(_ki)clearInterval(_ki);
   _ki=setInterval(async function(){
     try{
-      var rp3=new ethers.Contract(C.per,PE,R);
-      var kw=new ethers.Wallet('0x0000000000000000000000000000000000000000000000000000000000000000',R);
-      var allIds=await rp3.getAllOpenPositions();
-      for(var j=0;j<allIds.length;j++){try{
-        var pid2=Number(allIds[j]),po3=await rp3.getPosition(pid2);
+      
+
+      
+
+      
+
+      for(
+j<allIds.length;j++){try{
+        
+
         if(po3[8])continue;
-        var pi=Number(po3[2]),si=SYMS[pi],ppk=si?si.s:null;
-        var m3=Number(po3[3])/1e6,l3=Number(po3[4])/100,ep3=Number(po3[5])/1e8,q3=Number(po3[6])/1e8,il3=Number(po3[1])===0;
-        var pairPrice=ppk&&BP[ppk]&&BP[ppk].p?BP[ppk].p:0;
+        
+
+        
+
+        
+
         if(!pairPrice)continue;
-        var pl3=il3?(pairPrice-ep3)*q3:(ep3-pairPrice)*q3,pv3=q3*pairPrice,em3=m3+pl3,mr3=pv3>0?em3/(pv3/l3):999;
+        
+
         if(mr3<0.85){try{
-          var lp=ethers.parseUnits(pairPrice.toFixed(8),8);
+          
+
           await kw.sendTransaction({to:C.per,data:_pif.encodeFunctionData('liquidate',[pid2,lp]),gasLimit:2000000});
           log('LIQUIDATED #'+pid2,'ok')
-        }catch(e2){log('Liq fail: '+e2.message,'err')}}
-      }catch(e2){}}
-    }catch(e2){}
+        
+(e2){log('Liq fail: '+e2.message,'err')}}
+      
+(e2){}}
+    
+(e2){}
   },30000);}
 
-function refreshAll(){refreshPool();loadPos();refreshBalance()}
-async function refreshBalance(){if(!UA||!R)return;try{var u=new ethers.Contract(C.usdc,E20,R);var b=await u.balanceOf(UA);$('walletBal').textContent='$'+fm(b)}catch(e){}}
+
+refreshPool();loadPos();refreshBalance()}
+async 
+if(!UA||!R)return
+{
+
+
+$('walletBal').textContent='$'+fm(b)
+(e){}}
 
 // Direct Binance fetch — fast, no Vercel proxy
-function binanceMap() { var m={}; SYMS.forEach(function(x){
-  if(x.k.indexOf('BINANCE:')===0) m[x.s]=1;
+function binanceMap() { 
+
 }); return m; }
-var _stockMap={BABAUSDT:'BABA',MRVLUSDT:'MRVL',AMATUSDT:'AMAT',SKHYNIXUSDT:'SKHYNIX',SPCXUSDT:'SPCX',WDCUSDT:'WDC',SNDKUSDT:'SNDK',CRCLUSDT:'CRCL',TSLAUSDT:'TSLA',NVDAUSDT:'NVDA',MSFTUSDT:'MSFT',GOOGLUSDT:'GOOGL',AAPLUSDT:'AAPL',MUUSDT:'MU',AMZNUSDT:'AMZN',INTCUSDT:'INTC',AMDUSDT:'AMD',HOODUSDT:'HOOD',XAGUSDT:'XAG',XAUUSDT:'XAU'};
-function _updateBP(sym,o){var s=SYMS.find(function(x){return x.s===sym});if(!s)return;var p0=BP[sym]?BP[sym].p:0;BP[sym]={p:o.p||p0,c:o.c,h:o.h||o.p,l:o.l||o.p,v:o.v||0,t:o.t||0,m:o.m||0};}
-async function _fetchBinance(){
-  var bm=binanceMap();
-  try{var r=await fetch('https://api.binance.com/api/v3/ticker/24hr');if(r.ok){(await r.json()).forEach(function(t){
+
+if(!s)return;
+
+BP[sym]={p:o.p||p0,c:o.c,h:o.h||o.p,l:o.l||o.p,v:o.v||0,t:o.t||0,m:o.m||0
+}
+async 
+
+  
+
+  try{
+if(r.ok){(await r.json()).forEach(function(t){
     if(bm[t.symbol])_updateBP(t.symbol,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
-  })}}catch(e){}
-  try{var r2=await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr');if(r2.ok){(await r2.json()).forEach(function(t){
-    var s=_stockMap[t.symbol];if(s)_updateBP(s,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
+  })}
+(e){}
+  try{
+if(r2.ok){(await r2.json()).forEach(function(t){
+    
+if(s)_updateBP(s,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
     if(t.symbol==='PAXGUSDT')_updateBP('XAU',{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
-  })}}catch(e){}
+  })}
+(e){}
 }
 setInterval(async function(){await _fetchBinance();updatePBar();updateCalc()},1000);
 
 fetchPrices();updateChart();setInterval(refreshAll,5000);
 log('PerpDEX V5 — Connect wallet','ok');
-function connectWC(){log('Launching WalletConnect...');window._wcConnect&&window._wcConnect()}
+
+log('Launching WalletConnect...')
+._wcConnect&&window._wcConnect()}
 </script>
 <script type="module">
-import { EthereumProvider } from 'https://esm.sh/@walletconnect/ethereum-provider@2.15.1';
+import { EthereumProvider }
+rom 'https://esm.sh/@walletconnect/ethereum-provider@2.15.1';
 const WC_ID='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 try{
   const p=await EthereumProvider.init({projectId:WC_ID,chains:[5042002],optionalChains:[1],showQrModal:true,methods:['eth_sendTransaction','personal_sign'],events:['chainChanged','accountsChanged'],metadata:{name:'PerpDEX V6',description:'PerpDEX Trading',url:location.origin,icons:[]}});
-  window._wcConnect=async function(){try{await p.connect();await connect(p);log('WalletConnect connected','ok')}catch(e){log('WC: '+e.message,'err')}};
-  p.on('disconnect',function(){log('WalletConnect disconnected');UA=null;S=null;$('btnConnect').textContent='Connect Wallet';$('btnConnect').style='';$('btnDrop').style.display='none';$('walletAddr').textContent='—';$('walletBal').textContent='—'});
+  window._wcConnect=async function(){try{await p.connect();await connect(p)
+('WalletConnect connected','ok')
+(e){log('WC: '+e.message,'err')}
+
+  p.on('disconnect',function(){log('WalletConnect disconnected');UA=null;S=null
+('btnConnect').textContent='Connect Wallet'
+('btnConnect').style=''
+('btnDrop').style.display='none'
+('walletAddr').textContent='—'
+('walletBal').textContent='—'});
   log('WalletConnect ready','ok');
-}catch(e){log('WC init: '+e.message,'err')}
+
+(e){log('WC init: '+e.message,'err')}
 </script>
 </body>
 </html>
