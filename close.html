@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>紧急平仓</title>
+<title>Emergency Close</title>
 <script src="/ethers.min.js"></script>
 <style>
 body{font-family:system-ui;background:#0a0a0b;color:#e8e8ea;padding:20px;max-width:600px;margin:0 auto}
@@ -18,18 +18,18 @@ h1{font-size:18px;color:#ff5252}
 </style>
 </head>
 <body>
-<h1>🚨 紧急平仓工具</h1>
+<h1>🚨 Emergency CloseTool</h1>
 <div class="card">
-<h3>1. 连接钱包</h3>
+<h3>1. Connect Wallet</h3>
 <button class="btn btn-blue" onclick="doConnect()">Connect Wallet</button>
 <span id="addr" style="font-size:12px;color:#888"></span>
 </div>
 <div class="card">
-<h3>2. 你的仓位</h3>
-<div id="positions">连接钱包后显示...</div>
+<h3>2. Your Positions</h3>
+<div id="positions">Connect Wallet to view...</div>
 </div>
 <div class="card">
-<h3>3. 日志</h3>
+<h3>3. Log</h3>
 <div class="log" id="log"></div>
 </div>
 
@@ -42,58 +42,58 @@ function em(e){return e&&(e.shortMessage||e.message||String(e))}
 
 async function doConnect(){
   var w=window.ethereum||window.okxwallet;
-  if(!w)return log('没检测到钱包扩展','err');
+  if(!w)return log('No wallet detected','err');
   try{
     try{await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]});}catch(e){if(e.code===4902){await w.request({method:'wallet_addEthereumChain',params:[{chainId:C.hex,chainName:'Arc Testnet',rpcUrls:[C.rpc],nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18}}]});await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]});}}
     var a=await w.request({method:'eth_requestAccounts'});UA=a[0];
     S=await(new ethers.BrowserProvider(w)).getSigner();R=new ethers.JsonRpcProvider(C.rpc);
     document.getElementById('addr').textContent=UA.slice(0,8)+'...'+UA.slice(-6);
-    log('已连接: '+UA,'ok');
+    log('Connected: '+UA,'ok');
     await loadPositions();
-  }catch(e){log('连接失败: '+em(e),'err')}
+  }catch(e){log('Connection failed: '+em(e),'err')}
 }
 
 async function loadPositions(){
   var perp=new ethers.Contract(C.per,['function getUserPositions(address) view returns (uint256[])','function getPosition(uint256) view returns (tuple(address,uint8,uint8,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool))'],R);
   var ids=await perp.getUserPositions(UA);
-  log('找到 '+ids.length+' 个仓位记录');
+  log('Found '+ids.length+'  positions');
   var h='';
   for(var i=ids.length-1;i>=0;i--){
     try{
       var id=Number(ids[i]),po=await perp.getPosition(id);
-      if(po[9]){log('#'+id+' 已关闭，跳过');continue;}
+      if(po[9]){log('#'+id+' Closed，Skipped');continue;}
       var si=SYMS[Number(po[2])];
       h+='<div style="display:flex;align-items:center;gap:8px;padding:6px;background:#1c1c1f;border-radius:4px;margin:4px 0">'+
         '<span style="font-weight:700;min-width:60px">#'+id+'</span>'+
         '<span style="min-width:80px">'+(si?si.l:'pair='+po[2])+'</span>'+
         '<span style="min-width:60px;color:'+(po[1]===0?'#0f0':'#f00')+'">'+(po[1]===0?'LONG':'SHORT')+'</span>'+
         '<span style="min-width:80px">entry $'+(Number(po[5])/1e8).toFixed(4)+'</span>'+
-        '<button style="background:#ff5252;color:#fff;border:0;border-radius:4px;padding:4px 12px;cursor:pointer;font-weight:700" onclick="closeOne('+id+')">平仓</button>'+
+        '<button style="background:#ff5252;color:#fff;border:0;border-radius:4px;padding:4px 12px;cursor:pointer;font-weight:700" onclick="closeOne('+id+')">Close</button>'+
         '</div>';
-    }catch(e){log('#'+ids[i]+' 错误: '+em(e),'err')}
+    }catch(e){log('#'+ids[i]+' Error: '+em(e),'err')}
   }
-  document.getElementById('positions').innerHTML=h||'没有活跃仓位';
+  document.getElementById('positions').innerHTML=h||'No active positions';
 }
 
 async function closeOne(pid){
-  log('=== 平仓 #'+pid+' ===');
-  if(!UA||!S)return log('请先连接钱包','err');
+  log('=== Close #'+pid+' ===');
+  if(!UA||!S)return log('Please Connect Wallet','err');
   
   try{
     var perp=new ethers.Contract(C.per,['function getPosition(uint256) view returns (tuple(address,uint8,uint8,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool))'],R);
     var po=await perp.getPosition(pid);
     var pairIdx=Number(po[2]);
     var si=SYMS[pairIdx];
-    log('仓位 #'+pid+': pair='+pairIdx+' ('+(si?si.l:'?')+') entry='+(Number(po[5])/1e8).toFixed(4)+' side='+(po[1]===0?'LONG':'SHORT')+' closed='+po[9],'info');
+    log('Position #'+pid+': pair='+pairIdx+' ('+(si?si.l:'?')+') entry='+(Number(po[5])/1e8).toFixed(4)+' side='+(po[1]===0?'LONG':'SHORT')+' closed='+po[9],'info');
     
-    if(po[9]){log('已经关闭了！','warn');return;}
+    if(po[9]){log('already closed！','warn');return;}
     
     // Get price - try Binance first
     var cp=0;
     if(si){
       try{
         var r=await fetch('https://api.binance.com/api/v3/ticker/price?symbol='+si.s);
-        if(r.ok){var d=await r.json();cp=parseFloat(d.price);log('Binance价格: $'+cp.toFixed(4),'ok')}
+        if(r.ok){var d=await r.json();cp=parseFloat(d.price);log('BinancePrice: $'+cp.toFixed(4),'ok')}
       }catch(e){}
     }
     
@@ -109,8 +109,8 @@ async function closeOne(pid){
     }
     
     // Last fallback: entry price
-    if(!cp||cp<=0){cp=Number(po[5])/1e8;log('使用entry价格: $'+cp.toFixed(4),'warn')}
-    if(!cp||cp<=0)return log('无法获取价格','err');
+    if(!cp||cp<=0){cp=Number(po[5])/1e8;log('UseentryPrice: $'+cp.toFixed(4),'warn')}
+    if(!cp||cp<=0)return log('Cannot fetchPrice','err');
     
     // Step 1: Update Oracle
     var ow=new ethers.Wallet('0xa66826b8c82d112ae1edc61d53b1519741c06af822e78ad85597e76502d02826',R);
@@ -119,25 +119,25 @@ async function closeOne(pid){
     try{
       var priceRaw=ethers.parseUnits(cp.toFixed(8),8);
       var orx=await ow.sendTransaction({to:C.orc,data:new ethers.Interface(['function updatePrice(uint256)']).encodeFunctionData('updatePrice',[priceRaw]),gasLimit:300000,nonce:owNonce});
-      log('Oracle更新 tx: '+orx.hash.slice(0,14)+'...');
+      log('OracleUpdate tx: '+orx.hash.slice(0,14)+'...');
       await orx.wait();
-      log('Oracle已更新到 $'+cp.toFixed(4),'ok');
+      log('OracleUpdateto $'+cp.toFixed(4),'ok');
     }catch(e2){
-      log('Oracle更新失败: '+em(e2),'err');
+      log('OracleUpdateFailed: '+em(e2),'err');
       // Continue anyway
     }
     
     // Step 2: Close position
-    log('发送平仓交易...');
+    log('SendCloseTx...');
     var tx=await S.sendTransaction({to:C.per,data:new ethers.Interface(['function closePosition(uint256)']).encodeFunctionData('closePosition',[pid]),gasLimit:2000000});
-    log('平仓 tx: '+tx.hash.slice(0,14)+'...');
+    log('Close tx: '+tx.hash.slice(0,14)+'...');
     var rc=await tx.wait();
-    log('✅ 已平仓 #'+pid+'! block '+rc.blockNumber,'ok');
+    log('✅ Close #'+pid+'! block '+rc.blockNumber,'ok');
     
     // Refresh
     setTimeout(loadPositions,2000);
   }catch(e){
-    log('❌ 平仓失败: '+em(e),'err');
+    log('❌ CloseFailed: '+em(e),'err');
     if(e.data)log('Revert: '+e.data,'err');
   }
 }

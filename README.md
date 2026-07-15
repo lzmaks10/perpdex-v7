@@ -1,24 +1,24 @@
 # PerpDEX V7
 
-去中心化永续合约交易平台，部署于 Arc Testnet。
+Decentralized perpetual futures exchange on Arc Testnet.
 
-## 合约
+## Contract
 
-- **地址**: 0xE593262736B8D25455A04aE46C37b2ABA4Af2A77
-- **网络**: Arc Testnet (ChainID 5042002)
-- **编译器**: Solidity 0.8.20 + Optimizer (200 runs)
+- **Address**: 0xE593262736B8D25455A04aE46C37b2ABA4Af2A77
+- **Network**: Arc Testnet (ChainID 5042002)
+- **Compiler**: Solidity 0.8.20 + Optimizer (200 runs)
 - **LP Token**: pLP (ERC20, 6 decimals)
 
-## 功能
+## Features
 
-- 31 个交易对 (11 加密货币 + 20 股票/商品)
-- 最高 50x 杠杆
-- ERC20 LP 代币
-- Keeper 清算机制
-- 价格保护 ±10%
+- 31  Trading Pairs (11 Crypto + 20 Stocks/Commodities)
+- Up to 50x x Leverage
+- ERC20 LP  Token
+- Keeper Keeper Liquidation
+- Price Protection ±10%
 
-## 文件
+## Files
 
-- index.html — DApp 前端
-- PerpDEXV7.sol — 智能合约
-- close.html — 紧急平仓工具
+- index.html — DApp Frontend
+- PerpDEXV7.sol — Smart Contract
+- close.html — Emergency Close Tool
