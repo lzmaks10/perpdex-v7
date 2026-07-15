@@ -3,16 +3,25 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PerpDEX V6</title>
-<script src="/ethers.min.js"></script>
-<script>window.updateChart=function(){
+<script src="/ethers.min.js">
+
+</script>
+<script>
+window.updateChart=function(){
 if(CS.indexOf('NASDAQ:')===0){
-sym='BINANCE:'+t+'USDT.P';}else sym='BINANCE:'+CS.replace('BINANCE:','').replace('USDT','USDC');
+sym='BINANCE:'+t+'USDT.P;
+}else sym='BINANCE:'+CS.replace('BINANCE:','').replace('USDT','USDC');
 
 if(old)old.remove();
 
-_ifr.id='tvframe';_ifr.style.cssText='width:100%;height:320px;border:none;border-radius:8px';
+_ifr.id='tvframe;
+_ifr.style.cssText='width:100%;
+height:320px;
+border:none;
+border-radius:8px;
 
-tc.innerHTML='';tc.appendChild(_ifr);
+tc.innerHTML=';
+tc.appendChild(_ifr);
 
 _ifr.src='https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#'+encodeURIComponent(c);
 </script>
@@ -100,6 +109,7 @@ body{font-family:system-ui,sans-serif;background:var(--b);color:var(--t);min-hei
 .err{color:var(--r)}
 .info{color:var(--t2)}
 .warn{color:#ffab40}
+
 </style>
 <link rel="icon" href="/favicon.png" type="image/png">
 </head>
@@ -178,108 +188,118 @@ body{font-family:system-ui,sans-serif;background:var(--b);color:var(--t);min-hei
 </div>
 
 <script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-l.innerHTML+='<div class="'+(c||'info')+'">'+new Date().toLocaleTimeString()+' '+m+'</div>';l.scrollTop=l.scrollHeight}
+l.innerHTML+='<div class="'+(c||'info')+'">'+new Date().toLocaleTimeString()+' '+m+'</div>;
+l.scrollTop=l.scrollHeight}
 
 return e.reason||e.shortMessage||(e.info&&e.info.error&&e.info.error.message)||e.message||String(e)}
 
-return(Number(v)/1e6).toLocaleString('en-US',{maximumFractionDigits:2})}
+return(Number(v)/1e6).toLocaleString('en-US',{maximumFractionDigits:2}
+)}
 
 d=d||2
- Number(v).toLocaleString('en-US',{maximumFractionDigits:d})}
+ Number(v).toLocaleString('en-US',{maximumFractionDigits:d}
+)}
 
 return v>=1e9?'$'+(v/1e9).toFixed(2)+'B':v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+(v/1e3).toFixed(2)+'K':'$'+v.toFixed(2)}
-async 
 
+async 
 log('Tx: '+tx.hash.slice(0,14)+'...');
 
 log('Confirmed block '+rc.blockNumber,'ok')
  rc}
 
+SYMS.forEach(function(p,i){if(i===11)
+h+='<div class=sd></div>;
 
-
-SYMS.forEach(function(p,i){if(i===11)h+='<div class=sd></div>';
-
-h+='<div class="so'+(p.k===CS?' on':'')+'" data-sym="'+p.k+'" style="color:'+clr+'">'+p.l+'</div>'})
+h+='<div class="so'+(p.k===CS?' on':'')+'" data-sym="'+p.k+'" style="color:'+clr+'">'+p.l+'</div>'}
+)
 ('sm').innerHTML=h}
+
 buildPairs();
+
 $('sb').onclick=function(e){e.stopPropagation()
 ('sm').classList.toggle('o')
+document.addEventListener('click',function(e){if(!e.target.closest('.sp'))$('sm').classList.remove('o')}
+);
 
-document.addEventListener('click',function(e){if(!e.target.closest('.sp'))$('sm').classList.remove('o')});
 $('sm').addEventListener('click',async function(e){
-if(!el)return;CS=el.dataset.sym;buildPairs()
+if(!el)return;
+
+CS=el.dataset.sym;
+buildPairs()
 ('sb').textContent=el.textContent+' ▾'
-('sm').classList.remove('o');await _fetchBinance();updatePBar();updateCalc();updateChart()});
+('sm').classList.remove('o');
+
+await _fetchBinance();
+updatePBar();
+updateCalc();
+updateChart()}
+);
 
 async 
-
   try{
-
-
 for(
-updatePBar();updateCalc()
+updatePBar();
+updateCalc()
 (e){}
+
+
 }
-
-
-
 
 return d?d.p:0}
 
-
-  
 if(!si)return;
 
 if(!d||!d.p)return;
+
   $('p0').textContent='$'+fn(d.p)
 ('p1').textContent=(d.c>=0?'+':'')+(d.c||0).toFixed(2)+'%'
-('p1').style.color=(d.c||0)>=0?'var(--g)':'var(--r)';
+('p1').style.color=(d.c||0)>=0?'var(--g)':'var(--r);
+
   $('p2').textContent='$'+fn(d.h)
 ('p3').textContent='$'+fn(d.l);
-  $('volLabel').textContent='24h Vol ('+si.s.replace('USDT','')+')'; 
- $('p5').textContent=coins>=1e9?(coins/1e9).toFixed(2)+'B':coins>=1e6?(coins/1e6).toFixed(2)+'M':coins>=1e3?(coins/1e3).toFixed(2)+'K':fn(coins,0); $('p6').textContent=fv(d.t||0);
-}
 
+  $('volLabel').textContent='24h Vol ('+si.s.replace('USDT','')+');
+
+ $('p5').textContent=coins>=1e9?(coins/1e9).toFixed(2)+'B':coins>=1e6?(coins/1e6).toFixed(2)+'M':coins>=1e3?(coins/1e3).toFixed(2)+'K':fn(coins,0);
+
+ $('p6').textContent=fv(d.t||0);
+
+
+}
 
 $('ld').textContent=l+'x'
-(!pv){['cop','cpv','clp'].forEach(function(i){$(i).textContent='--'})
+(!pv){['cop','cpv','clp'].forEach(function(i){$(i).textContent='--'}
+)
 }
+
 $('cop').textContent='$'+fn(cp)
 ('cpv').textContent='$'+fn(pv*l)
 ('clp').textContent='$'+fn(lq)}
+
 $('pi').oninput=updateCalc
 ('ls').oninput=updateCalc;
 
-
-
 $('btnConnect').onclick=function(e){e.stopPropagation()
 (!UA){$('walletModal').style.display='flex'}else $('walletDrop').style.display=$('walletDrop').style.display==='block'?'none':'block'
-
 $('btnDrop').onclick=function(e){e.stopPropagation()
 ('walletDrop').style.display=$('walletDrop').style.display==='block'?'none':'block'
-
 document.addEventListener('click',function(){try{$('walletDrop').style.display='none'
-(e){}});
-$('btnDisconnect').onclick=function(e){e.stopPropagation();disconnect()
+(e){}
+
+}
+);
+
+$('btnDisconnect').onclick=function(e){e.stopPropagation();
+disconnect()
 ('walletDrop').style.display='none'
+if(_ki)clearInterval(_ki);
 
+UA=null;
 
-if(_ki)clearInterval(_ki);UA=null;S=null;R=null
+S=null;
+
+R=null
 ('btnConnect').textContent='Connect Wallet'
 ('btnConnect').style=''
 ('btnDrop').style.display='none'
@@ -287,300 +307,359 @@ if(_ki)clearInterval(_ki);UA=null;S=null;R=null
 ('walletBal').textContent='—'
 ('pt').textContent='—'
 ('Wallet disconnected','ok')}
+
 $('btnOKX').onclick=function(e){e.stopPropagation()
-('walletModal').style.display='none';
+('walletModal').style.display='none;
 
 if(!w){log('OKX Wallet not detected','err')
 }connect(w)
-
 $('btnWC').onclick=function(e){e.stopPropagation()
-('walletModal').style.display='none';connectWC()
-
+('walletModal').style.display='none;
+connectWC()
 $('btnWCCancel').onclick=function(e){e.stopPropagation()
 ('walletModal').style.display='none'
-
 $('walletModal').onclick=function(e){if(e.target===this)$('walletModal').style.display='none'
-
-
-
-
 async 
 if(!w)w=window.ethereum||window.okxwallet
 (!w)return log('Please install a wallet','err');
+
   try{
-    try{await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]})
-(e){if(e.code===4902){await w.request({method:'wallet_addEthereumChain',params:[{chainId:C.hex,chainName:'Arc Testnet',rpcUrls:[C.rpc],nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18}}]});await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}]})}else{log('Switch to Arc Testnet first','err')
-}}
-    
+    try{await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}
+]}
+)
+(e){if(e.code===4902){await w.request({method:'wallet_addEthereumChain',params:[{chainId:C.hex,chainName:'Arc Testnet',rpcUrls:[C.rpc],nativeCurrency:{name:'ETH',symbol:'ETH',decimals:18}
+
+}
+]}
+);
+
+await w.request({method:'wallet_switchEthereumChain',params:[{chainId:C.hex}
+]}
+)}else{log('Switch to Arc Testnet first','err')
+}
+
+}
+
 UA=a[0]
 ('Connected: '+UA.slice(0,8)+'...','ok');
-    S=await(new ethers.BrowserProvider(w)).getSigner();R=new ethers.JsonRpcProvider(C.rpc);
+
+    S=await(new ethers.BrowserProvider(w)).getSigner();
+
+R=new ethers.JsonRpcProvider(C.rpc);
+
     try{
 log('RPC: block '+bn,'ok')
 (e){log('RPC failed: '+e.message,'err')}
+
     try{
 log('Vault: '+(vc.length>4?'OK':'EMPTY'),vc.length>4?'ok':'err')
 (e){}
+
     try{
 log('PerpDEX: '+(pc.length>4?'OK':'EMPTY'),pc.length>4?'ok':'err')
 (e){}
+
     try{
-
-
 log('USDC: '+fm(b),'ok')
 ('walletBal').textContent='$'+fm(b)
 (e){$('walletBal').textContent='???'}
+
     $('btnConnect').textContent=UA.slice(0,6)+'..'+UA.slice(-4)
 ('btnConnect').style.borderRadius='20px 0 0 20px'
 ('btnConnect').style.background='var(--s2)'
-('btnConnect').style.border='1px solid var(--br)';
+('btnConnect').style.border='1px solid var(--br);
+
     $('btnDrop').style.display='inline-block'
 ('walletAddr').textContent=UA;
-    refreshAll();startKeeper();setTimeout(function(){refreshAll()},2000);
-  
+
+
+    refreshAll();
+startKeeper();
+
+setTimeout(function(){refreshAll()}
+
+,2000);
+
+
 (e){log('Connect failed: '+em(e),'err')}
+
+
 }
 
 document.querySelector('.th').addEventListener('click',function(e){
 if(!t)return
-.querySelectorAll('.tb').forEach(function(x){x.className='tb'});side=t.dataset.s==='SHORT'?1:0;t.classList.add(side?'as':'al')
+.querySelectorAll('.tb').forEach(function(x){x.className='tb'}
+);
+side=t.dataset.s==='SHORT'?1:0;
+t.classList.add(side?'as':'al')
 ('oob').textContent='Open '+(side?'Short':'Long')
 ('oob').style.background=side?'var(--r)':'var(--g)'
-('oob').style.color=side?'#fff':'#000';updateCalc()});
+('oob').style.color=side?'#fff':'#000;
+updateCalc()}
+);
 
 async 
-
   if(!UA||!R)return;
+
   try{
-    
-
-    
 $('pt').textContent='$'+fm(tl);
+
     try{
-
-
 $('md').textContent='$'+dep;
 
 $('ms').textContent=(p===Math.round(p)?String(p):p.toFixed(1))+'%'
 ('mlp').textContent='$'+dep
 (e){}
+
     try{
-      
-
-      
-
       for(
-i<ids.length;i++){try{
+i<ids.length;
+i++){try{
 if(!po[8]){
 oi+=sz;
 
-
-
 tp+=(Number(po[1])===0?(cp-ep):(ep-cp))*tq}
+
 (e){}
 
-      $('toi').textContent='$'+(oi/1e6).toLocaleString('en-US',{maximumFractionDigits:2});
-      
+      $('toi').textContent='$'+(oi/1e6).toLocaleString('en-US',{maximumFractionDigits:2}
+);
+
 $('tpPnl').textContent=(pp>=0?'+':'')+pp.toFixed(2)+' USDC'
-('tpPnl').style.color=pp>=0?'var(--g)':'var(--r)';
+('tpPnl').style.color=pp>=0?'var(--g)':'var(--r);
+
       try{
 if(adj>0)$('adjLiq').textContent='$'+fm(BigInt(Math.floor(adj)))
 (e){}
-    
+
+
 (e){}
-  
+
+
 (e){}
+
+
 }
 
 async 
-
   if(!UA)return log('Not connected','err');
 
 if(!am||Number(am)<=0)return log('Enter amount','err');
-  try{
 
   try{
-    
-
-
+  try{
 if(bal<w)return log('Insufficient USDC','err');
-    
-if(alw<w){log('Approving USDC...');await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000)
+
+if(alw<w){log('Approving USDC...');
+
+await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000)
 ('Approved','ok')}
+
     await _send(C.per,isDep?_pif.encodeFunctionData('deposit',[w]):_pif.encodeFunctionData('withdraw',[w]),500000);
-    log((isDep?'Deposited!':'Withdrawn!'),'ok');refreshBalance();refreshAll();
-  
+
+    log((isDep?'Deposited!':'Withdrawn!'),'ok');
+refreshBalance();
+refreshAll();
+
+
 (e){log((isDep?'Deposit':'Withdraw')+' FAILED: '+em(e),'err')}
+
+
 }
+
 $('btnDeposit').onclick=function(){doDeposit(true)
 $('btnWithdraw').onclick=function(){doDeposit(false)
-
-
 $('oob').onclick=async function(){
   if(!UA)return log('Not connected','err');
 
 if(!pr||Number(pr)<=0)return log('Enter margin','err');
-  
 
   try{
-
   try{
-    
-
-
 if(bal<w)return log('Insufficient USDC','err');
-    
-if(alw<w){log('Approving PerpDEX...');await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000)
+
+if(alw<w){log('Approving PerpDEX...');
+
+await _send(C.usdc,_eif.encodeFunctionData('approve',[C.per,ethers.MaxUint256]),100000)
 ('Approved','ok')}
-    
+
 if(pairIdx<0)pairIdx=0;
 
 if(!p||p<=0)return log('No price','err');
 
 await _send(C.per,_pif.encodeFunctionData('openPosition',[side,pairIdx,w,ls,op]),3000000);
+
     log('Position opened!','ok');
+
     try{
-
-
 if(ids.length>0){
-sp[Number(ids[ids.length-1])]=CS;localStorage.setItem('pp',JSON.stringify(sp))}
+sp[Number(ids[ids.length-1])]=CS;
+localStorage.setItem('pp',JSON.stringify(sp))}
+
 (e){}
+
     refreshAll();
-  
+
+
 (e){log('Open FAILED: '+em(e),'err')}
 
-
-
 async 
-
   log('Close #'+pid+'...');
+
   try{
-    
 try{
-
-
-
-
-
-
-if(!cp||cp<=0)cp=Number(po[5])/1e8;sp=ethers.parseUnits(cp.toFixed(8),8)
+if(!cp||cp<=0)cp=Number(po[5])/1e8;
+sp=ethers.parseUnits(cp.toFixed(8),8)
 (e){}
+
     if(!sp)throw new Error('No price');
+
     await _send(C.per,_pif.encodeFunctionData('closePosition',[pid,sp]),2000000);
-    log('Closed #'+pid+'!','ok');refreshAll();
-  
+
+    log('Closed #'+pid+'!','ok');
+refreshAll();
+
+
 (e){log('Close FAILED: '+em(e),'err')
 (e.data)log('Revert data: '+e.data,'err')}
+
+
 }
+
 $('ol').addEventListener('click',function(e){
-if(b)closePos(parseInt(b.dataset.oid))});
+if(b)closePos(parseInt(b.dataset.oid))}
+);
 
 async 
-
   if(!UA||!R)return;
-  try{
-    
 
-    
+  try{
 if(!ids.length){$('ol').innerHTML='<div class=nc><small>No positions</small></div>'
 }
-    
 
     for(
-i>=0;i--){try{
-      
+i>=0;
+i--){try{
 if(po[8]||po[0].toLowerCase()!==UA.toLowerCase())continue;
-      
+
 
       
-
-      
-
-      h+='<div class="oc '+(isL?'l':'s')+'\"><div class=gr><div class=c>'+lbl+'</div><div class="c n" style=color:'+rc+'>$'+fn(mp,2)+'</div><div class="c n" style=color:'+rc+'>$'+fn(entry,2)+'</div><div class="c n" style=color:'+rc+'>$'+fn(Number(po[7])/1e8,2)+'</div><div class="c n" style=color:'+rc+'>'+fn(Number(po[3])*Number(po[4])/100/1e6)+'</div><div class="c n" style=color:'+rc+'>'+(Number(po[4])/100)+'x</div><div class="c n" style="font-weight:700;color:'+rc+'\">'+(pnl>=0?'+':'')+pnl.toFixed(2)+'</div><div class="c n">'+fn(Number(po[6])/1e6,4)+'</div><button class="nbmc" data-oid="'+oid+'">Close</button></div></div>'
-    
-(e){}}
-    $('ol').innerHTML=h||'<div class=nc><small>No active positions</small></div>'
-  
+h+='<div class="oc '+(isL?'l':'s')+'\"><div class=gr><div class=c>'+lbl+'</div><div class="c n" style=color:'+rc+'>$'+fn(mp,2)+'</div><div class="c n" style=color:'+rc+'>$'+fn(entry,2)+'</div><div class="c n" style=color:'+rc+'>$'+fn(Number(po[7])/1e8,2)+'</div><div class="c n" style=color:'+rc+'>'+fn(Number(po[3])*Number(po[4])/100/1e6)+'</div><div class="c n" style=color:'+rc+'>'+(Number(po[4])/100)+'x</div><div class="c n" style="font-weight:700;
+color:'+rc+'\">'+(pnl>=0?'+':'')+pnl.toFixed(2)+'</div><div class="c n">'+fn(Number(po[6])/1e6,4)+'</div><button class="nbmc" data-oid="'+oid+'">Close</button></div></div>'
 (e){}
+
 }
 
+    $('ol').innerHTML=h||'<div class=nc><small>No active positions</small></div>'
+(e){}
+
+
+}
 
 if(!UA)return
 (_ki)clearInterval(_ki);
+
+
   _ki=setInterval(async function(){
     try{
-      
-
-      
-
-      
-
       for(
-j<allIds.length;j++){try{
-        
-
+j<allIds.length;
+j++){try{
         if(po3[8])continue;
-        
-
-        
-
-        
 
         if(!pairPrice)continue;
-        
 
         if(mr3<0.85){try{
-          
+          await kw.sendTransaction({to:C.per,data:_pif.encodeFunctionData('liquidate',[pid2,lp]),gasLimit:2000000}
+);
 
-          await kw.sendTransaction({to:C.per,data:_pif.encodeFunctionData('liquidate',[pid2,lp]),gasLimit:2000000});
           log('LIQUIDATED #'+pid2,'ok')
-        
-(e2){log('Liq fail: '+e2.message,'err')}}
-      
-(e2){}}
-    
+(e2){log('Liq fail: '+e2.message,'err')}
+
+}
+
+
 (e2){}
-  },30000);}
+
+}
 
 
-refreshPool();loadPos();refreshBalance()}
+(e2){}
+
+
+  }
+
+,30000);
+}
+
+refreshPool();
+loadPos();
+refreshBalance()}
+
 async 
 if(!UA||!R)return
 {
-
-
 $('walletBal').textContent='$'+fm(b)
-(e){}}
+(e){}
+
+}
+
 
 // Direct Binance fetch — fast, no Vercel proxy
 function binanceMap() { 
+}
+);
 
-}); return m; }
+ return m;
+
+ }
 
 if(!s)return;
 
 BP[sym]={p:o.p||p0,c:o.c,h:o.h||o.p,l:o.l||o.p,v:o.v||0,t:o.t||0,m:o.m||0
 }
+
 async 
-
-  
-
   try{
 if(r.ok){(await r.json()).forEach(function(t){
-    if(bm[t.symbol])_updateBP(t.symbol,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
-  })}
+    if(bm[t.symbol])_updateBP(t.symbol,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)}
+);
+
+
+  }
+)}
+
 (e){}
+
   try{
 if(r2.ok){(await r2.json()).forEach(function(t){
-    
-if(s)_updateBP(s,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
-    if(t.symbol==='PAXGUSDT')_updateBP('XAU',{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)});
-  })}
-(e){}
-}
-setInterval(async function(){await _fetchBinance();updatePBar();updateCalc()},1000);
+if(s)_updateBP(s,{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)}
+);
 
-fetchPrices();updateChart();setInterval(refreshAll,5000);
+    if(t.symbol==='PAXGUSDT')_updateBP('XAU',{p:parseFloat(t.lastPrice),c:parseFloat(t.priceChangePercent),h:parseFloat(t.highPrice),l:parseFloat(t.lowPrice),v:parseFloat(t.volume),t:parseFloat(t.quoteVolume)}
+);
+
+
+  }
+)}
+
+(e){}
+
+
+}
+
+setInterval(async function(){await _fetchBinance();
+updatePBar();
+updateCalc()}
+
+,1000);
+
+
+fetchPrices();
+updateChart();
+
+setInterval(refreshAll,5000);
+
 log('PerpDEX V5 — Connect wallet','ok');
 
 log('Launching WalletConnect...')
@@ -588,20 +667,36 @@ log('Launching WalletConnect...')
 </script>
 <script type="module">
 import { EthereumProvider }
-rom 'https://esm.sh/@walletconnect/ethereum-provider@2.15.1';
-const WC_ID='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
+rom 'https://esm.sh/@walletconnect/ethereum-provider@2.15.1;
+
+
+const WC_ID='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
+
+
 try{
-  const p=await EthereumProvider.init({projectId:WC_ID,chains:[5042002],optionalChains:[1],showQrModal:true,methods:['eth_sendTransaction','personal_sign'],events:['chainChanged','accountsChanged'],metadata:{name:'PerpDEX V6',description:'PerpDEX Trading',url:location.origin,icons:[]}});
-  window._wcConnect=async function(){try{await p.connect();await connect(p)
+  const p=await EthereumProvider.init({projectId:WC_ID,chains:[5042002],optionalChains:[1],showQrModal:true,methods:['eth_sendTransaction','personal_sign'],events:['chainChanged','accountsChanged'],metadata:{name:'PerpDEX V6',description:'PerpDEX Trading',url:location.origin,icons:[]}
+
+}
+);
+
+
+  window._wcConnect=async function(){try{await p.connect();
+await connect(p)
 ('WalletConnect connected','ok')
 (e){log('WC: '+e.message,'err')}
 
-  p.on('disconnect',function(){log('WalletConnect disconnected');UA=null;S=null
+  p.on('disconnect',function(){log('WalletConnect disconnected');
+UA=null;
+S=null
 ('btnConnect').textContent='Connect Wallet'
 ('btnConnect').style=''
 ('btnDrop').style.display='none'
 ('walletAddr').textContent='—'
-('walletBal').textContent='—'});
+('walletBal').textContent='—'}
+);
+
+
   log('WalletConnect ready','ok');
 
 (e){log('WC init: '+e.message,'err')}
